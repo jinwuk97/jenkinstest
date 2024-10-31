@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp7
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp7
+  template:
+    metadata:
+      labels:
+        app: myapp7
+    spec:
+      containers:
+      - name: myapp7
+        image: jiruk/keduitlab:yellow  # DockerHub에 있는 이미지
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins7
+spec:
+  selector:
+    app: jenkins7
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
