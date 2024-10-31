@@ -9,7 +9,7 @@ pipeline {
     stage('docker build and push') {
       steps {
         sh '''
-        sudo docker build -t jiruk/keduit:purple
+        sudo docker build -t jiruk/keduit:purple .
         sudo docker push jiruk/keduit:purple
         '''
       }
