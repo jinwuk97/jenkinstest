@@ -22,10 +22,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins7
+  name: myapp7
 spec:
   selector:
-    app: jenkins7
+    app: myapp7
   type: LoadBalancer
   ports:
     - protocol: TCP
