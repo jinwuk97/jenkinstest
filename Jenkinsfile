@@ -19,7 +19,7 @@ pipeline {
                 script {
                     // Docker 이미지를 빌드하고, Docker Hub에 푸시합니다.
                     sh '''
-                    sudo docker build -t jiruk/keduitlab:purple
+                    sudo docker build -t jiruk/keduitlab:purple .
                     sudo docker push jiruk/keduitlab:purple
                     '''
                 }
