@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'brian24/keduitlbe:purple'  // Docker 이미지 이름
-        ANSIBLE_INVENTORY = '/root/inventory.ini'          // Ansible 인벤토리 파일 경로
+        DOCKER_IMAGE = 'jiruk/keduitlab:purple'  // Docker 이미지 이름 수정
+        ANSIBLE_INVENTORY = '/root/inventory.ini' // Ansible 인벤토리 파일 경로
     }
 
     stages {
@@ -19,8 +19,8 @@ pipeline {
                 script {
                     // Docker 이미지를 빌드하고, Docker Hub에 푸시합니다.
                     sh '''
-                    sudo docker build -t jiruk/keduitlab:purple . 
-                    sudo docker push jiruk/keuditlab:purple
+                    sudo docker build -t ${DOCKER_IMAGE} . 
+                    sudo docker push ${DOCKER_IMAGE}
                     '''
                 }
             }
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     // Ansible 플레이북을 실행하여 각 워커 노드에서 Docker 이미지를 당겨옵니다.
-                    sh "ansible-playbook -i inventory.ini deploy_docker_image.yml"
+                    sh "ansible-playbook -i ${ANSIBLE_INVENTORY} deploy_docker_image.yml"
                 }
             }
         }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     // Ansible 플레이북을 실행하여 마스터 노드에서 Kubernetes 배포 및 노출을 처리합니다.
-                    sh "ansible-playbook -i inventory.ini deploy_k8s.yml"
+                    sh "ansible-playbook -i ${ANSIBLE_INVENTORY} deploy_k8s.yml"
                 }
             }
         }
